@@ -37,5 +37,4 @@ ActiveRecord::Schema.define(version: 2023_03_09_041211) do
     t.string "name"
     t.string "image_url"
   end
-
 end

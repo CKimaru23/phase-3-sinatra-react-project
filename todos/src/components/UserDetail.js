@@ -104,11 +104,13 @@ const UserDetail = () => {
   return (
     <div>
       <Header as='h2' icon textAlign='center'>
+
         <Image
           size="Large"
           avatar
           src={`http://localhost:4000${user.image_url}`}
         />
+
         <Header.Content>{user.name}</Header.Content>
       </Header>
       <center>  <Button icon labelPosition='left' style={{ margin: "15px" }} onClick={handleAddModalOpen}> <Icon name='plus' /> Add Todo </Button></center>

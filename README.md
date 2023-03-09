@@ -4,7 +4,9 @@ This is a web application that allows users to create and manage a list of tasks
 
 ## Installation
 
-To install the app, clone this repository
+<p>To install the app, clone this repository</p>
+<p>Railway link: <a href="https://phase-3-sinatra-react-project-production-dd92.up.railway.app/todos">https://phase-3-sinatra-react-project-production-dd92.up.railway.app/todos</a></p>
+<p>Deployed link: <a href="https://phase-3-sinatra-react-project-xlbp.vercel.app/">Todo app</a></p>
 
 ### BackEnd Setup
 
@@ -48,4 +50,5 @@ This app uses the following API endpoints:
 
 ## ERD
 
-![alt text]
+
+![ERD diagram ](/Erd.png)
