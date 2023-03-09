@@ -10,14 +10,27 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_03_01_141136) do
+ActiveRecord::Schema.define(version: 2023_03_09_041211) do
+
+  create_table "tags", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "tags_todos", id: false, force: :cascade do |t|
+    t.integer "tag_id", null: false
+    t.integer "todo_id", null: false
+    t.index ["tag_id", "todo_id"], name: "index_tags_todos_on_tag_id_and_todo_id"
+    t.index ["todo_id", "tag_id"], name: "index_tags_todos_on_todo_id_and_tag_id"
+  end
 
   create_table "todos", force: :cascade do |t|
     t.string "title"
     t.string "description"
-    t.string "category"
     t.string "priority"
     t.integer "user_id"
+    t.string "category"
   end
 
   create_table "users", force: :cascade do |t|

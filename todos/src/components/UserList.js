@@ -7,7 +7,7 @@ function UserList() {
   const [users, setUsers] = useState([]);
   const [modalOpen, setModalOpen] = useState(false);
   const [name, setName] = useState('');
-  const [image_url, setImageUrl] = useState('');
+  const [image_url, setImageUrl] = useState(null);
 
   useEffect(() => {
     fetch('http://localhost:4000/users')
@@ -33,19 +33,26 @@ function UserList() {
 
   const handleSubmit = (event) => {
     event.preventDefault();
+
+    const formData = new FormData();
+    formData.append('name', name);
+    formData.append('image', image_url);
+
     axios
-      .post('http://localhost:4000/users', {
-        name: name,
-        image_url: image_url,
+      .post('http://localhost:4000/users', formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
       })
       .then((response) => {
         setUsers([...users, response.data]);
         setName('');
-        setImageUrl('');
+        setImageUrl(null);
         handleModalClose();
       })
       .catch((error) => console.error(error));
   };
+
 
   return (
     <>
@@ -65,7 +72,7 @@ function UserList() {
             <Table.Row key={user.id}>
               <Table.Cell>{user.name}</Table.Cell>
               <Table.Cell>
-                <Image src={user.image_url} size="tiny" rounded />
+                <Image src={`http://localhost:4000${user.image_url}`} size="tiny" rounded />
               </Table.Cell>
               <Table.Cell>
                 <Link to={`/users/details/${user.id}`}>
@@ -88,25 +95,29 @@ function UserList() {
         <Modal.Content>
           <Form onSubmit={handleSubmit}>
             <Form.Field>
-              <label>Name</label>
+              <label htmlFor="name-input">Name</label>
               <input
+                id="name-input"
                 placeholder="User name"
                 value={name}
                 onChange={(event) => setName(event.target.value)}
               />
             </Form.Field>
             <Form.Field>
-              <label>Profile Image</label>
+              <label htmlFor="image-input">Select a profile image:</label>
               <input
-                placeholder="Image URL"
-                value={image_url}
-                onChange={(event) => setImageUrl(event.target.value)}
+                id="image-input"
+                type="file"
+                onChange={(event) => setImageUrl(event.target.files[0])}
               />
             </Form.Field>
-            <Button type="submit">Add</Button>
+            <Button type="submit" disabled={!name || !image_url}>
+              Add
+            </Button>
           </Form>
         </Modal.Content>
       </Modal>
+
     </>
   );
 }
